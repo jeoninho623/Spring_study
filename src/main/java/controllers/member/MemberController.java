@@ -21,7 +21,10 @@ public class MemberController {
     }*/
 
     @GetMapping("/member/login")
-    public String login() {
+    public String login(Model model) {
+
+        model.addAttribute("userId","user99");
+        model.addAttribute("userPw","비밀번호");
 
         return "member/login";  // login.html
     }
