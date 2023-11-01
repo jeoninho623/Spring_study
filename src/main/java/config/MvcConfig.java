@@ -22,6 +22,12 @@ public class MvcConfig implements WebMvcConfigurer {
     private ApplicationContext ctx;
 
     @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/")
+                .setViewName("/main/index");
+    }
+
+    @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 
         configurer.enable();
