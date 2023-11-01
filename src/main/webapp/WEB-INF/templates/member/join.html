@@ -1,16 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>메롱</title>
-    </head>
-    <body>
-        <header th:replace="~{outlines/header::common}"></header>
-        <main>
-            <p>
-                본문
-            </p>
-        </main>
-        <footer th:replace="~{outlines/footer::common}"></footer>
-    </body>
+<html xmlns:th="https://www.thymeleaf.org"
+    xmlns:layout="http://www.ultaq.new.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/main}">
+
+    <main layout:fragment="content">
+        <h1>회원가입</h1>
+    </main>
 </html>
