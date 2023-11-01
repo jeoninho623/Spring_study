@@ -4,7 +4,7 @@
         <table border="2">
             <thead>
                 <tr>
-                    <th>순번</th>
+                    <th th:if="false">순번</th>
                     <th></th>
                     <th>회원 번호</th>
                     <th>아이디</th>
@@ -17,13 +17,14 @@
                 <tr th:each="member, status : ${members}" th:object="${member}">
                     <!--<td th:text="${status.index}"></td>-->          <!--0부터-->
                     <!--<td th:text="${status.count}"></td> -->        <!--1부터-->
-                    <td>
+                    <td th:if="false">
                         <th:block th:text="${status.count}"></th:block>
                         [<th:block th:text="${status.first}"></th:block>]
                         [<th:block th:text="${status.last}"></th:block>]
                     </td>
                     <td th:if="${status.even}">짝수</td>
-                    <td th:if="${status.odd}">홀수</td>
+                    <td th:unless="${status.even}">홀수</td>
+                    <!--<td th:if="${!status.odd}">홀수</td>-->
                     <td th:text="*{userNo}"></td>
                     <td th:text="*{userId}"></td>
                     <td th:text="*{userNm}"></td>
