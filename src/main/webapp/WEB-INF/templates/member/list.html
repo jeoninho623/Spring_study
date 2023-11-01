@@ -22,16 +22,26 @@
                         [<th:block th:text="${status.first}"></th:block>]
                         [<th:block th:text="${status.last}"></th:block>]
                     </td>
-                    <td th:if="${status.even}">짝수</td>
-                    <td th:unless="${status.even}">홀수</td>
+                    <td th:switch="${status.even}">     <!--간단한 반복문-->
+                        <th:block th:case="true">짝수</th:block>
+                        <th:block th:case="false">홀수</th:block>
+                    </td>
+                    <!--<td th:if="${status.even}">짝수</td>
+                    <td th:unless="${status.even}">홀수</td>-->
                     <!--<td th:if="${!status.odd}">홀수</td>-->
-                    <td th:text="*{userNo}"></td>
+                    <td th:text="*{#numbers.formatInteger(userNo,3,'COMMA')}"></td>
                     <td th:text="*{userId}"></td>
                     <td th:text="*{userNm}"></td>
                     <td th:text="*{email}"></td>
-                    <td th:text="*{regDt}"></td>
+                    <td th:text="*{#temporals.format(regDt, 'yyyy.MM.dd')}"></td>
                 </tr>
             </tbody>
         </table>
+
+        <th:block th:text="${@utils.toUpper('abc')}"></th:block>
+
+        <div th:each="num : ${#numbers.sequence(1, 10, 3)}">
+            <div th:text="${num}"></div>
+        </div>
     </body>
 </html>

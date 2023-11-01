@@ -1,5 +1,6 @@
 package config;
 
+import commons.Utils;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,7 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
-@EnableWebMvc // 개꿀 맛도리 설정 에노테이션
+@EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -22,6 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+
         configurer.enable();
     }
 
@@ -45,7 +47,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true);     // 번역시 EL식도 번역가능하게
+        templateEngine.setEnableSpringELCompiler(true);
         templateEngine.addDialect(new Java8TimeDialect());
         templateEngine.addDialect(new LayoutDialect());
         return templateEngine;
@@ -73,5 +75,10 @@ public class MvcConfig implements WebMvcConfigurer {
         ms.setDefaultEncoding("UTF-8");
 
         return ms;
+    }
+
+    @Bean
+    public Utils utils() {
+        return new Utils();
     }
 }

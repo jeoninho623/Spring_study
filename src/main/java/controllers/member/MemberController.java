@@ -16,15 +16,11 @@ import java.util.stream.IntStream;
 @Controller
 public class MemberController {
 
-    /*@Autowired
-    private HttpServletRequest request;
-    @GetMapping("/member/login")
-    public String login(RequestLogin form, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(form);
-        System.out.println(response);
-        System.out.println(request.getParameter("userId"));
-        return "member/login";
-    }*/
+    @GetMapping("/member/join")
+    public String join() {
+
+        return "/member/join";
+    }
 
     @GetMapping("/member/login")
     public String login(Model model) {
@@ -64,7 +60,7 @@ public class MemberController {
 
     private Member addMember(int i) {
         return Member.builder()
-                .userNo(i)
+                .userNo(i * 10000)
                 .userId("user" + i)
                 .userPw("123456")
                 .userNm("사용자" + i)
