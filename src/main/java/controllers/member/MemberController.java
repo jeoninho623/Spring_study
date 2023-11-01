@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.IntStream;
+
 @Controller
 public class MemberController {
 
@@ -46,5 +50,26 @@ public class MemberController {
         model.addAttribute("member", member);
 
         return "/member/info";
+    }
+
+    @GetMapping("/member/list")
+    public String members(Model model) {
+
+        List<Member> members = IntStream.rangeClosed(1,10).mapToObj(this::addMember).toList();
+
+        model.addAttribute("members",members);
+
+        return "member/list";
+    }
+
+    private Member addMember(int i) {
+        return Member.builder()
+                .userNo(i)
+                .userId("user" + i)
+                .userPw("123456")
+                .userNm("사용자" + i)
+                .email("user" + i + "@test.org")
+                .regDt(LocalDateTime.now())
+                .build();
     }
 }
