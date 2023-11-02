@@ -5,7 +5,6 @@
 
     <main layout:fragment="content">
         <h1>회원가입</h1>
-        [[${requestJoin}]]
         <form method="post" th:action="@{/member/join}" th:object="${requestJoin}">
             <dl>
                 <dt>아이디</dt>

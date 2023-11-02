@@ -1,28 +1,34 @@
 package controllers.member;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/member")
+@RequiredArgsConstructor
 public class MemberController {
 
+    private final JoinValidator joinValidator;              // == @Autowired
+
     @GetMapping("/join")          // /member/join
-    public String join(Model model) {
-        RequestJoin requestJoin = new RequestJoin();
-        model.addAttribute("requestJoin", requestJoin);
+    public String join(@ModelAttribute RequestJoin join) {
+
         return "member/join";
     }
 
      @PostMapping("/join")          // /member/join
-    public String joinPs(RequestJoin join, Model model) {
+    public String joinPs(RequestJoin join, Errors errors) {
+
+        joinValidator.validate(join, errors);
 
          return "member/join";
 
-         // return "redirect:/member/login";         // 회원전용 페이지로 이동
+         // return "redirect:/member/login";
     }
 
     @GetMapping("/login")       // /member/login
