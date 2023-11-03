@@ -1,5 +1,6 @@
 package controllers.member;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -13,25 +14,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final JoinValidator joinValidator;              // == @Autowired
+    private final JoinValidator joinValidator;
 
-    @GetMapping("/join")          // /member/join
+    @GetMapping("/join") // /member/join
     public String join(@ModelAttribute RequestJoin join) {
 
         return "member/join";
     }
 
-     @PostMapping("/join")          // /member/join
-    public String joinPs(RequestJoin join, Errors errors) {
+    @PostMapping("/join")
+    public String joinPs(@Valid RequestJoin join, Errors errors) {
+
 
         joinValidator.validate(join, errors);
 
-         return "member/join";
+        if (errors.hasErrors()) {
+            // 검증 실패시 유입
+            return "member/join";
+        }
 
-         // return "redirect:/member/login";
+        // 검증 성공 -> 회원가입 처리
+
+        return "redirect:/member/login";
     }
 
-    @GetMapping("/login")       // /member/login
+    @GetMapping("/login")  // /member/login
     public String login() {
 
         return "member/login";
@@ -43,24 +50,27 @@ public class MemberController {
         return "member/login";
     }
 
-    /*@GetMapping("/member/join")
+    /*
+    @GetMapping("/member/join")
     public String join(Model model) {
-        String[] addCss = {"member/test1","member/test2"};
-        List<String> addScript = Arrays.asList("member/script1","member/script2");
+        String[] addCss = {"member/test1", "member/test2"};
+        List<String> addScript = Arrays.asList("member/script1", "member/script2");
 
-        model.addAttribute("addCss",addCss);
-        model.addAttribute("addScript",addScript);
-        model.addAttribute("pageTitle","회원가입");
-        return "/member/join";
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addScript", addScript);
+        model.addAttribute("pageTitle", "회원가입");
+
+        return "member/join";
     }
+
 
     @GetMapping("/member/login")
     public String login(Model model) {
 
-        model.addAttribute("userId","user99");
-        model.addAttribute("userPw","비밀번호");
+        model.addAttribute("userId", "user99");
+        model.addAttribute("userPw", "비밀번호");
 
-        return "member/login";  // login.html
+        return "member/login"; // login.html
     }
 
     @GetMapping("/member/info")
@@ -68,7 +78,7 @@ public class MemberController {
 
         Member member = Member.builder()
                 .userNo(1L)
-                .userId("<h1>user01</h1>")      // th:text 인식못함  th:utext 인식가능
+                .userId("<h1>user01</h1>")
                 .userPw("123456")
                 .userNm("사용자01")
                 .email("user01@test.org")
@@ -77,15 +87,14 @@ public class MemberController {
 
         model.addAttribute("member", member);
 
-        return "/member/info";
+        return "member/info";
     }
 
     @GetMapping("/member/list")
     public String members(Model model) {
 
-        List<Member> members = IntStream.rangeClosed(1,10).mapToObj(this::addMember).toList();
-
-        model.addAttribute("members",members);
+        List<Member> members = IntStream.rangeClosed(1, 10).mapToObj(this::addMember).toList();
+        model.addAttribute("members", members);
 
         return "member/list";
     }
@@ -96,8 +105,10 @@ public class MemberController {
                 .userId("user" + i)
                 .userPw("123456")
                 .userNm("사용자" + i)
-                .email("user" + i + "@test.org")
+                .email("user"+i+"@test.org")
                 .regDt(LocalDateTime.now())
                 .build();
-    }*/
+
+    }
+     */
 }
