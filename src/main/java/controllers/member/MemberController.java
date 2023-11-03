@@ -17,6 +17,7 @@ public class MemberController {
 
     private final JoinValidator joinValidator;
     private final JoinService joinService;
+    private final LoginValidator loginValidator;
 
     @GetMapping("/join") // /member/join
     public String join(@ModelAttribute RequestJoin join) {
@@ -42,15 +43,22 @@ public class MemberController {
     }
 
     @GetMapping("/login")  // /member/login
-    public String login() {
+    public String login(@ModelAttribute RequestLogin form) {
 
         return "member/login";
     }
 
     @PostMapping("/login")
-    public String loginPs() {
+    public String loginPs(@Valid RequestLogin form, Errors errors) {
+        loginValidator.validate(form,errors);
 
-        return "member/login";
+        if(errors.hasErrors()) {
+            return "member/login";
+        }
+
+        // 유효성 검사 성공 -> 로그인 처리
+
+        return "redirect:/";
     }
 
     /*

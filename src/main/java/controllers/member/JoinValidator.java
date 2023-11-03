@@ -1,6 +1,7 @@
 package controllers.member;
 
 import commons.MobileValidator;
+import lombok.RequiredArgsConstructor;
 import models.member.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
+@RequiredArgsConstructor
 public class JoinValidator implements Validator, MobileValidator {
 
 
