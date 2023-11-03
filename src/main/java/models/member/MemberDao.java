@@ -18,21 +18,7 @@ public class MemberDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    /*public boolean register(Member member) {
-
-        String userPw = BCrypt.hashpw(member.getUserPw(), BCrypt.gensalt(12));
-        member.setUserPw(userPw);
-
-        String sql = "INSERT INTO MEMBER (USER_NO, USER_ID, USER_PW, EMAIL, USER_NM, MOBILE) " +
-                " VALUES (SEQ_MEMBER.nextval, ?, ?, ?, ?, ?)";
-        int affectedRows = jdbcTemplate.update(sql, member.getUserId(),
-                userPw, member.getEmail(), member.getUserNm(), member.getMobile());
-
-        return affectedRows > 0;
-    }*/
-
     public boolean register(Member member) {
-
         String userPw = BCrypt.hashpw(member.getUserPw(), BCrypt.gensalt(12));
         String sql = "INSERT INTO MEMBER (USER_NO, USER_ID, USER_PW, EMAIL, USER_NM, MOBILE) " +
                 " VALUES (SEQ_MEMBER.nextval, ?, ?, ?, ?, ?)";
@@ -57,6 +43,7 @@ public class MemberDao {
 
         return affectedRows > 0;
     }
+
 
     public Member get(String userId) {
         try {
