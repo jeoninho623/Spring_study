@@ -1,11 +1,20 @@
 package controllers.member;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record RequestLogin(
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RequestLogin {
         @NotBlank
-        String userId,
+        private String userId;
         @NotBlank
-        String userPw,
-        Boolean saveId
-) {}
+        private String userPw;
+
+        private boolean saveId;
+}

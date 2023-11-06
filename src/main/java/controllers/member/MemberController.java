@@ -1,14 +1,13 @@
 package controllers.member;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.member.JoinService;
+import models.member.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member")
@@ -18,6 +17,7 @@ public class MemberController {
     private final JoinValidator joinValidator;
     private final JoinService joinService;
     private final LoginValidator loginValidator;
+    private final LoginService loginService;
 
     @GetMapping("/join") // /member/join
     public String join(@ModelAttribute RequestJoin join) {
@@ -43,7 +43,11 @@ public class MemberController {
     }
 
     @GetMapping("/login")  // /member/login
-    public String login(@ModelAttribute RequestLogin form) {
+    public String login(@ModelAttribute RequestLogin form, @CookieValue(name="saveId",required = false) String userId) {
+        if(userId != null) {
+            form.setUserId(userId);
+            form.setSaveId(true);
+        }
 
         return "member/login";
     }
@@ -57,10 +61,17 @@ public class MemberController {
         }
 
         // 유효성 검사 성공 -> 로그인 처리
+        loginService.login(form);
 
         return "redirect:/";
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+
+        return "redirect:/member/login";
+    }
     /*
     @InitBinder
     public void initBinder(WebDataBinder binder) {
