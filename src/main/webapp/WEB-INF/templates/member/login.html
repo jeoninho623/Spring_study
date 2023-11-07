@@ -30,6 +30,14 @@
             <a th:href="@{/member/find_pw}" th:text="#{비밀번호 찾기}">비밀번호 찾기</a>
             <a th:href="@{/member/join?key1={key1}(key1=${userId}, key2=value2)}" th:text="#{회원가입}"></a>
         </div>
+        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=bb24e898a56bf578bcb898821e4c454c&redirect_uri=http://localhost:3000">
+            Kakao 로그인
+        </a>
+        <div>
+            <a href="naver-login">
+                <button>네이버 로그인</button>
+            </a>
+        </div>
     </form>
 </main>
 </html>
