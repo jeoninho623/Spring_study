@@ -17,7 +17,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
 @EnableWebMvc
-@Import(DbConfig.class)
+@Import(DbConfig2.class)
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -43,13 +43,11 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Bean
     public CommonInterceptor commonInterceptor() {
-
         return new CommonInterceptor();
     }
 
     @Bean
     public MemberOnlyInterceptor memberOnlyInterceptor() {
-
         return new MemberOnlyInterceptor();
     }
 
@@ -72,6 +70,9 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
+
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:///C:/uploads/");
     }
 
     @Bean
